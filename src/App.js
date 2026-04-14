@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Home from './pages/home';
+import Shoot from './pages/shoot';
+import Frame from './pages/frame';
+import Download from './pages/download';
 
 function App() {
+  const [step, setStep] = useState("home");
+  const [photos, setPhotos] = useState([]);
+  const [finalImage, setFinalImage] = useState(null);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {step === "home" && <Home setStep={setStep} />}
+      {step === "shoot" && (
+        <Shoot setStep={setStep} photos={photos} setPhotos={setPhotos} />
+      )}
+      {step === "frame" && (
+        <Frame
+          photos={photos}
+          setFinalImage={setFinalImage}
+          setStep={setStep} />
+      )}
+      {step === "download" && <Download finalImage={finalImage} />}
+    </>
   );
 }
 
